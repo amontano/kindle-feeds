@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>kindle feeds</title>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+</head>
+<body>
+  <a name="start"></a>
+
+  <h1>Kindle Feeds</h1>
+  <p>version <%= KindleFeeds::VERSION %></p>
+  <p>copyright 2008 Daniel Choi</p>
+  <p>contact: dhchoi@gmail.com</p>
+  <p>open source license: <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a></p>
+  <p>homepage: <a href="http://danielchoi.com/software/kindle-feeds.html">http://danielchoi.com/software/kindle-feeds.html</a></p>
+  <br/>
+  <br/>
+
+  <a name="toc"></a>
+  <h2>Table of Contents</h2>
+  <ul>
+    <% @sections.each_with_index do |x, i| %>
+    <li><a href="#section-<%= i %>"><%= x.title %></li>
+    <% end %>
+  </ul>
+<% @sections.each_with_index do |s, i| %>
+
+  <br/>
+  <br/>
+  <div class="section details">
+    <a name="section-<%= i %>" ></a>
+    <div style="text-align:right">
+      <ul style="list-style-type:none">
+        <li><a href="#toc">table of contents</a></li>
+      </ul>
+    </div>
+    <h2>Section: <%= s.title %></h2>
+    <p>Feeds in this section:<p>
+    <ol>
+      <% s.feeds.each_with_index do |f, m| %>
+      <li><a href="#section-<%= i %>-feed-<%= m %>"><%= f.title %></li>
+      <% end %>
+    </ol>
+    <% s.feeds.each_with_index do |f, j| %>
+      <a name="section-<%= i%>-feed-<%= j %>"></a>
+      <h2>Feed: <a href="<%= f.url %>"><%= f.title %></a></h2>
+      <p><%= f.entries.size %> Entries:</p>
+      <ol>
+        <% f.entries.each_with_index do |e, n| %>
+        <li><a href="#section-<%= i %>-feed-<%= j %>-entry-<%= n %>"><%= e.title %></li>
+        <% end %>
+      </ol>
+
+      <% f.entries.each_with_index do |e, n| %>
+        <a name="section-<%= i %>-feed-<%= j %>-entry-<%= n %>"></a>
+        <div style="text-align:right"><i><%= e.date_published ?
+            e.date_published.strftime('%B %d, %Y') : nil %></i> (<%= n + 1
+          %>/<%= f.entries.size %>) 
+
+          <% if (n + 1) < f.entries.size %>
+          | <a href="#section-<%= i %>-feed-<%= j %>-entry-<%= n + 1 %>">skip to next</a>
+          <% end %>
+        </div>
+        <h3><a href="<%= e.url %>"><%= e.title %></a></h3>
+        <div>
+          <%= e.content %>
+        </div>
+        <div style="text-align:right">
+          <ul style="list-style-type:none">
+            <li><a href="#toc">table of contents</a></li>
+            <li><a href="#section-<%= i%>"><%= s.title %></a></li>
+            <li><a href="#section-<%= i%>-feed-<%= j %>"><%= f.title %></a></li> 
+          </ul>
+        </div>
+        <br/>
+        <br/>
+      <% end %>
+    <% end %>
+  </div>
+
+<% end %>
+</body>
+</html>
+
+

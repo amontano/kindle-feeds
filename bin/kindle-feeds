@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require 'kindle-feeds'
+KindleFeeds.run ARGV
+

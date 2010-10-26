@@ -1,0 +1,14 @@
+=== 1.0.3 / 2008-08-24
+
+* Atom feeds scanned first before RSS
+
+=== 1.0.2 / 2008-08-24
+
+* minor bugfixes and tweaks
+
+=== 1.0.0 / 2008-08-22
+
+* 1 major enhancement
+
+  * Initial release.
+

@@ -1,0 +1,13 @@
+History.txt
+Manifest.txt
+README.txt
+Rakefile
+bin/kindle-feeds
+lib/kindle-feeds.rb
+lib/htmlentities.rb
+lib/htmlentities/html4.rb
+lib/htmlentities/legacy.rb
+lib/htmlentities/string.rb
+lib/htmlentities/xhtml1.rb
+lib/kindle-feeds.erb.html
+
