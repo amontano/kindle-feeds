@@ -51,9 +51,9 @@
       <p><%= entries.size %> Entries:</p>
       <ol>
 <%    entries.each_with_index do |e, n| %>
-        <li><a href="#section-<%= i %>-feed-<%= j %>-entry-<%= n %>">
-<%=       "#{e.date_published.strftime('%d/%m')}:" if e.date_published %>	
-<%=       e.title %>
+        <li>
+	      <a name="section-<%= i%>-feed-<%= j %>-entry-link-<%= n %>"><%= "#{e.date_published.strftime('%d/%m')}:" if e.date_published %></a>
+	      <a href="#section-<%= i %>-feed-<%= j %>-entry-<%= n %>"><%= e.title %></a>
         </li>
 <%    end %>
       </ol>
@@ -81,11 +81,11 @@
         </div>
         <div style="text-align:right">
           <ul style="list-style-type:none">
-<%          if @sections.size>1 %>
+<%        if @sections.size>1 %>
             <li><a href="#toc">table of contents</a></li>
             <li><a href="#section-<%= i%>"><%= s.title %></a></li>
-<%          end %>
-            <li><a href="#section-<%= i%>-feed-<%= j %>"><%= f.title %></a></li> 
+<%        end %>
+            <li><a href="#section-<%= i%>-feed-<%= j %>-entry-link-<%= n %>"><%= f.title %></a></li> 
           </ul>
         </div>
         <br/>
