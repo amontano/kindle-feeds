@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 # kindle-feeds
 
 # copyright 2008 Daniel Choi
@@ -34,6 +35,7 @@ require 'htmlentities'
 require 'iconv'
 require 'erb'
 require 'hpricot'
+
 CONFIGFILE = "kindle_feeds.conf"
 ERB_TEMPLATE = File.dirname(__FILE__) + "/kindle-feeds.erb.html"
 DEFAULT_FEEDS = <<END
@@ -110,6 +112,7 @@ class Feed
     feed.entries.each do |e|
       e.title = coder.decode(e.title)
       e.content = coder.decode(e.content)
+      e.description = coder.decode(e.description)
 
       begin
         e.title = ic.iconv(e.title) 
@@ -120,6 +123,11 @@ class Feed
         e.content = ic.iconv(e.content) 
       rescue
         e.content = ic2.iconv(e.content) 
+      end
+      begin
+        e.description = ic.iconv(e.description) 
+      rescue
+        e.description = ic2.iconv(e.description) 
       end
       doc = Hpricot(e.content)
       doc.search('h1, h2, h3') do |h|
@@ -132,6 +140,18 @@ class Feed
       doc.search('svg, object, embed').remove
       doc.search('script').remove
       e.content = doc.to_s
+
+      doc = Hpricot(e.description)
+      doc.search('h1, h2, h3') do |h|
+        h.swap("<h4>#{h.inner_text}</h4>")
+      end
+      doc.search('//font') do |font|
+        font.swap(font.inner_text)
+      end
+      doc.search('//img').remove
+      doc.search('svg, object, embed').remove
+      doc.search('script').remove
+      e.description = doc.to_s
     end
     return feed
   end
