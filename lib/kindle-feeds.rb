@@ -35,6 +35,7 @@ require 'htmlentities'
 require 'iconv'
 require 'erb'
 require 'hpricot'
+require 'ruby-debug'
 
 CONFIGFILE = "kindle_feeds.conf"
 ERB_TEMPLATE = File.dirname(__FILE__) + "/kindle-feeds.erb.html"

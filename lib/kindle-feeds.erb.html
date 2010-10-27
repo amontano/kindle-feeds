@@ -35,8 +35,11 @@
     </div>
     <h2>Section: <%= s.title %></h2>
 <% end 
-   feeds = s.feeds 
-   if feeds.size>1 %>
+   feeds = s.feeds
+   if feeds.size>1 
+    if @sections.size==1 %>
+      <a name="toc"></a>
+<%  end %>
     <p>Feeds in this section:<p>
     <ol>
       <% feeds.each_with_index do |f, m| %>
@@ -49,20 +52,20 @@
       <a name="section-<%= i%>-feed-<%= j %>"></a>
       <h2>Feed: <a href="<%= f.url %>"><%= f.title %></a></h2>
       <p><%= entries.size %> Entries:</p>
-      <ol>
-<%    entries.each_with_index do |e, n| %>
-        <li>
-	      <a name="section-<%= i%>-feed-<%= j %>-entry-link-<%= n %>"><%= "#{e.date_published.strftime('%d/%m')}:" if e.date_published %></a>
-	      <a href="#section-<%= i %>-feed-<%= j %>-entry-<%= n %>"><%= e.title %></a>
-        </li>
+<%    if @sections.size==1 && feeds.size==1 %>
+        <a name="toc"></a>
+<%    end
+      entries.each_with_index do |e, n| %>
+	    <a name="section-<%= i%>-feed-<%= j %>-entry-link-<%= n %>"></a>
+		<ol start="<%= n+1 %>"><li><%= "#{e.date_published.strftime('%d/%m')}:" if e.date_published %>
+	    <a href="#section-<%= i %>-feed-<%= j %>-entry-<%= n %>"><%= e.title %></a></li></ol>
 <%    end %>
       </ol>
       <% entries.each_with_index do |e, n| %>
         <a name="section-<%= i %>-feed-<%= j %>-entry-<%= n %>"></a>
         <div style="text-align:right"><i><%= e.date_published ?
-            e.date_published.strftime('%B %d, %Y') : nil %></i> (<%= n + 1
-          %>/<%= entries.size %>) 
-
+            e.date_published.strftime('%b %d, %Y %I:%M %p') : nil %></i> (<%= n + 1
+          %>/<%= entries.size %>)
           <% if (n + 1) < entries.size %>
           | <a href="#section-<%= i %>-feed-<%= j %>-entry-<%= n + 1 %>">skip to next</a>
           <% end %>
@@ -93,7 +96,6 @@
       <% end %>
     <% end %>
   </div>
-
 <% end %>
 </body>
 </html>
