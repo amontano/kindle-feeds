@@ -70,7 +70,9 @@
           | <a href="#section-<%= i %>-feed-<%= j %>-entry-<%= n + 1 %>">skip to next</a>
           <% end %>
         </div>
+<%      if !e.url.start_with? 'http://www.techmeme' %>
         <h3><a href="<%= e.url %>"><%= e.title %></a></h3>
+<%      end %>
         <div>
 <%        content = e.content 
           if !content.nil? && !content.empty? %>

@@ -256,7 +256,7 @@ class KindleFeeds
 
   def to_html
     puts "Converting feeds into Kindle-compatible and optimized HTML..."
-    puts 
+    puts
     erb = ERB.new(File.read(ERB_TEMPLATE))
     out = erb.result(binding())
     # TODO put timestamp in filename
